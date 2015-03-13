@@ -13,6 +13,8 @@ public class DatastreamIngesterRoute extends RouteBuilder {
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("direct:ingestDatastream")
+            //TODO: Handle each version of this particular datastream
+
             // Get the mimetype
             .setProperty("mimetype").xpath("/foxml:datastream/foxml:datastreamVersion/@MIMETYPE", ns)
             .log("MIMETYPE ${property.mimetype}")
