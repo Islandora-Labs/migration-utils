@@ -29,6 +29,8 @@ public class ContainerIngesterRoute extends RouteBuilder {
             .removeHeaders("*")
             .transform(simple("${property.foxml}"))
 
+            // TODO: Add object properties here:
+            
             // And split it on datastreams and ingest each
             .split().xpath("/foxml:digitalObject/foxml:datastream", ns)
             .to("direct:ingestDatastream");
