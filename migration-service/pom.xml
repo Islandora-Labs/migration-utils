@@ -37,6 +37,22 @@
       <artifactId>camel-servlet</artifactId>
       <version>${camel.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-script</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-base64</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.fcrepo.camel</groupId>
+      <artifactId>fcrepo-camel</artifactId>
+      <version>4.1.1-SNAPSHOT</version>
+    </dependency>
 
     <!-- Spring Web -->
     <dependency>

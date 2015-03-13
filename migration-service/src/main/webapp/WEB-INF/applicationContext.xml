@@ -8,9 +8,6 @@
        http://camel.apache.org/schema/spring
        http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <!--
-        Simple camel route which send every one minute a message on the console.
-    -->
     <camelContext xmlns="http://camel.apache.org/schema/spring">
         <package>org.fcrepo.migration.service.routes</package>
     </camelContext>
