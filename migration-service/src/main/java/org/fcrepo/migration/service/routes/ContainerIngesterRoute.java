@@ -5,10 +5,17 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.component.http.HttpMethods;
 
+/**
+ * Ingests an object in Fedora 3 as a Container in Fedora 4.
+ *
+ * @author Daniel Lamb
+ */
 public class ContainerIngesterRoute extends RouteBuilder {
+
+    @Override
     public void configure() throws Exception {
         // Namespaces
-        Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
+        final Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("direct:ingestContainer")
@@ -30,7 +37,7 @@ public class ContainerIngesterRoute extends RouteBuilder {
             .transform(simple("${property.foxml}"))
 
             // TODO: Add object properties here:
-            
+
             // And split it on datastreams and ingest each
             .split().xpath("/foxml:digitalObject/foxml:datastream", ns)
             .to("direct:ingestDatastream");

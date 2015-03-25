@@ -6,10 +6,17 @@ import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.component.http.HttpMethods;
 import org.fcrepo.camel.FcrepoHeaders;
 
+/**
+ * Ingests a datastream from Fedora 3 as a NonRdfSourceDescription in Fedora 4.
+ *
+ * @author Daniel Lamb
+ */
 public class DatastreamIngesterRoute extends RouteBuilder {
+
+    @Override
     public void configure() throws Exception {
         // Namespaces
-        Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
+        final Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("direct:ingestDatastream")
@@ -35,8 +42,8 @@ public class DatastreamIngesterRoute extends RouteBuilder {
                     .to("fcrepo:localhost:8080/fcrepo/rest")
                 // Add binary content as NonRDFSourceDescription
                 .when().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:binaryContent", ns)
-                    .setBody().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:binaryContent/text()", ns).unmarshal().base64()
+                    .setBody().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:binaryContent/text()", ns)
+                    .unmarshal().base64()
                     .to("fcrepo:localhost:8080/fcrepo/rest");
-            
     }
 }
