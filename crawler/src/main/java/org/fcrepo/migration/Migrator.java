@@ -1,11 +1,13 @@
 package org.fcrepo.migration;
 
-import org.fcrepo.migration.foxml11.FoxmlDirectoryObjectSource;
-import org.fcrepo.migration.handlers.ConsoleLoggingStreamingFedoraObjectHandler;
+import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.File;
 import java.io.IOException;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * A class that represents a command-line program to migrate a fedora 3
@@ -18,47 +20,52 @@ import java.io.IOException;
  */
 public class Migrator {
 
-    public static void main(String [] args) throws IOException, XMLStreamException {
-        if (args.length == 1) {
-            File foxmlRoot = new File(args[0]);
-            validateDirectory(foxmlRoot);
-            System.out.println("Analyzing FOXML in " + foxmlRoot.getPath() + "...");
-            Migrator m = new Migrator(new FoxmlDirectoryObjectSource(foxmlRoot),
-                    new ConsoleLoggingStreamingFedoraObjectHandler());
-            m.run();
-        } else if (args.length == 3) {
-            File foxmlRoot = new File(args[0]);
-            File dsRoot = new File(args[1]);
-            File working = new File(args[2]);
-            validateDirectory(foxmlRoot);
-            validateDirectory(dsRoot);
-            System.out.println("Analyzing FOXML in " + foxmlRoot.getPath() + "...");
-            System.out.println("Analyzing datastreams in " + dsRoot.getPath() + " and building index within " + working);
-            Migrator m = new Migrator(new FoxmlDirectoryObjectSource(foxmlRoot, dsRoot, working),
-                    new ConsoleLoggingStreamingFedoraObjectHandler());
-            m.run();
-        }
-    }
+    private static final Logger LOGGER = getLogger(Migrator.class);
     
-    private static void validateDirectory(File d) {
-        if (!d.exists() || !d.isDirectory()) {
-            System.err.println("No directory found at " + d.getAbsolutePath() + "!");
-            System.exit(-1);
-        }
+    public static void main(final String [] args) throws IOException, XMLStreamException {
+
+        final ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/migration-bean.xml");
+        final Migrator m = context.getBean("migrator", Migrator.class);
+        m.run();
+        context.close();
     }
 
     private ObjectSource source;
 
     private StreamingFedoraObjectHandler handler;
 
-    public Migrator(ObjectSource source, StreamingFedoraObjectHandler handler) {
+    private int limit;
+
+    public Migrator() {
+        limit = -1;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public void setSource(final ObjectSource source) {
+        this.source = source;
+    }
+
+
+    public void setHandler(final StreamingFedoraObjectHandler handler) {
+        this.handler = handler;
+    }
+
+    public Migrator(final ObjectSource source, final StreamingFedoraObjectHandler handler) {
+        this();
         this.source = source;
         this.handler = handler;
     }
 
     public void run() throws XMLStreamException {
-        for (FedoraObjectProcessor o : source) {
-            System.out.println("Processing \"" + o.getObjectInfo().getPid() + "\"...");
+        int index = 0;
+        for (final FedoraObjectProcessor o : source) {
+            if (limit >= 0 && index ++ >= limit) {
+                break;
+            }
+            LOGGER.info("Processing \"" + o.getObjectInfo().getPid() + "\"...");
             o.processObject(handler);
         }
     }
