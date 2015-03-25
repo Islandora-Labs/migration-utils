@@ -39,11 +39,11 @@ public class DatastreamIngesterRoute extends RouteBuilder {
                 // Add xml content as NonRDFSourceDescription
                 .when().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:xmlContent", ns)
                     .setBody().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:xmlContent", ns)
-                    .to("fcrepo:localhost:8080/fcrepo/rest")
+                    .to("fcrepo:{{fcrepo.baseurl}}")
                 // Add binary content as NonRDFSourceDescription
                 .when().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:binaryContent", ns)
                     .setBody().xpath("/foxml:datastream/foxml:datastreamVersion/foxml:binaryContent/text()", ns)
                     .unmarshal().base64()
-                    .to("fcrepo:localhost:8080/fcrepo/rest");
+                    .to("fcrepo:{{fcrepo.baseurl}}");
     }
 }

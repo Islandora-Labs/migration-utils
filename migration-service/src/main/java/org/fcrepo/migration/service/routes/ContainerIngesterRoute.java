@@ -26,7 +26,7 @@ public class ContainerIngesterRoute extends RouteBuilder {
             .removeHeaders("*")
             .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
             .transform(simple("${null}"))
-            .to("fcrepo:localhost:8080/fcrepo/rest")
+            .to("fcrepo:{{fcrepo.baseurl}}")
 
             // Set parent path on the exchange so it persists
             .setHeader("container", body(String.class))

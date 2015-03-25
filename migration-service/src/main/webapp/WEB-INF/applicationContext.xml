@@ -9,6 +9,7 @@
        http://camel.apache.org/schema/spring/camel-spring.xsd">
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
+        <propertyPlaceholder id="properties" location="classpath:service.properties" />
         <package>org.fcrepo.migration.service.routes</package>
     </camelContext>
 
