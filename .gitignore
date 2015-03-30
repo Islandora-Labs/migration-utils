@@ -1,2 +1,9 @@
 target/
 .idea
+.settings
+.classpath
+.project
+.*.swp
+.*.swo
+workbench.xmi
+bin
