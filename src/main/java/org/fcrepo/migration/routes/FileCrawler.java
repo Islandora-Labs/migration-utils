@@ -1,7 +1,6 @@
 package org.fcrepo.migration.routes;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.fcrepo.migration.processors.ShutdownProcessor;
 
 /**
  * Recursively crawls the objectStore in a read-only fashion and sends an empty

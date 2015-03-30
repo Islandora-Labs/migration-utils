@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.fcrepo.camel</groupId>
       <artifactId>fcrepo-camel</artifactId>
-      <version>${project.version}</version>
+      <version>4.1.1</version>
     </dependency>
 
     <!-- logging -->
@@ -101,7 +101,7 @@
               <dependency>
                   <groupId>org.fcrepo</groupId>
                   <artifactId>fcrepo-build-tools</artifactId>
-                  <version>${project.version}</version>
+                  <version>4.1.1</version>
               </dependency>
           </dependencies>
           <configuration>

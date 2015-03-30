@@ -6,7 +6,7 @@ import org.apache.camel.builder.xml.Namespaces;
 import org.fcrepo.camel.HttpMethods;
 
 /**
- * Ingests an object into Fedora 4 using foxml from a Fedora 3 instance's 
+ * Ingests an object into Fedora 4 using foxml from a Fedora 3 instance's
  * objectStore directory.
  *
  * @author Daniel Lamb

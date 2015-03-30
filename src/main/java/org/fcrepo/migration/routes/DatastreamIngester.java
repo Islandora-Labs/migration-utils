@@ -4,7 +4,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
 
 /**
- * Ingests a datastream from Fedora 3 foxml as a NonRdfSourceDescription in 
+ * Ingests a datastream from Fedora 3 foxml as a NonRdfSourceDescription in
  * Fedora 4.
  *
  * @author Daniel Lamb

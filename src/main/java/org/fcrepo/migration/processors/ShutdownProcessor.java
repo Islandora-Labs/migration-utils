@@ -21,9 +21,8 @@ public class ShutdownProcessor implements Processor {
                 public void run() {
                     try {
                         Main.getInstance().shutdown();
-                    }
-                    catch (Exception e) {
-                        // ignore
+                    } catch (Exception e) {
+                        // Ignore
                     }
                 }
             };

@@ -7,7 +7,7 @@ import org.fcrepo.camel.FcrepoHeaders;
 import org.fcrepo.camel.HttpMethods;
 
 /**
- * Ingests a datastream from Fedora 3 foxml as a NonRdfSourceDescription in 
+ * Ingests a datastream from Fedora 3 foxml as a NonRdfSourceDescription in
  * Fedora 4.
  *
  * @author Daniel Lamb
