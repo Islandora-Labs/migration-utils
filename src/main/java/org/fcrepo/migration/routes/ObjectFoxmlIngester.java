@@ -41,6 +41,6 @@ public class ObjectFoxmlIngester extends RouteBuilder {
 
             // And split it on datastreams and ingest each
             .split().xpath("/foxml:digitalObject/foxml:datastream", ns)
-            .to("seda:datastream");
+            .to("seda:datastream?blockWhenFull=true");
     }
 }

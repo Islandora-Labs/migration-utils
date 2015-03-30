@@ -18,7 +18,7 @@ public class DatastreamIngester extends RouteBuilder {
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("seda:datastream")
-            .split().xpath("/foxml:datastream/foxml:datastreamVersion")
-            .to("seda:datastreamVersion");
+            .split().xpath("/foxml:datastream/foxml:datastreamVersion", ns)
+            .to("seda:datastreamVersion?blockWhenFull=true");
     }
 }

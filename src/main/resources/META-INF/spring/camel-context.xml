@@ -18,13 +18,14 @@
   <bean id="fileCrawler" class="org.fcrepo.migration.routes.FileCrawler" />
   <bean id="foxmlIngester" class="org.fcrepo.migration.routes.ObjectFoxmlIngester" />
   <bean id="datastreamIngester" class="org.fcrepo.migration.routes.DatastreamIngester" />
+  <bean id="datastreamVersionIngester" class="org.fcrepo.migration.routes.DatastreamVersionIngester" />
 
   <camelContext xmlns="http://camel.apache.org/schema/spring"
-                id="camel"
-                shutdownRunningTask="CompleteAllTasks">
+                id="camel">
     <routeBuilder ref="fileCrawler" />
     <routeBuilder ref="foxmlIngester" />
     <routeBuilder ref="datastreamIngester" />
+    <routeBuilder ref="datastreamVersionIngester" />
   </camelContext>
 
 </beans>
