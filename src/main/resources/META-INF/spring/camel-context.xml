@@ -12,7 +12,7 @@
   <!-- config -->
   <bean id="bridgePropertyPlaceholder" 
         class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
-    <property name="location" value="${configPath:classpath:migration.properties}"/>
+    <property name="location" value="${config.path:classpath:migration.properties}"/>
   </bean>
 
   <!-- routes -->

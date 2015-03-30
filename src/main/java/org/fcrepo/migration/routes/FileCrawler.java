@@ -13,7 +13,7 @@ public class FileCrawler extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("file:{{objectStorePath}}?noop=true&recursive=true&sendEmptyMessageWhenIdle=true")
+        from("file:{{objectStore.path}}?noop=true&recursive=true&sendEmptyMessageWhenIdle=true")
             .choice()
                 .when().simple("${body} != null")
                     .to("seda:foxml")
