@@ -40,8 +40,10 @@ public class ObjectFoxmlIngester extends RouteBuilder {
 
             // TODO: Add object properties here:
 
-            // And split it on datastreams and ingest each
-            .split().xpath("/foxml:digitalObject/foxml:datastream", ns)
+            // And split it on datastreams and ingest each.
+            // Use xtokenize to stream each piece without reading everything
+            // into memory.
+            .split().xtokenize("/foxml:digitalObject/foxml:datastream", 'i', ns).streaming()
             .to("direct:datastream");
     }
 }

@@ -21,7 +21,11 @@ public class DatastreamIngester extends RouteBuilder {
         from("direct:datastream")
             .id("datastreamIngester")
             .shutdownRoute(ShutdownRoute.Defer)
-            .split().xpath("/foxml:datastream/foxml:datastreamVersion", ns)
+
+            // Split on datastream version.
+            // Use xtokenize to stream each piece without reading everything
+            // into memory.
+            .split().xtokenize("/foxml:datastream/foxml:datastreamVersion", 'i', ns).streaming()
             .to("direct:datastreamVersion");
     }
 }
