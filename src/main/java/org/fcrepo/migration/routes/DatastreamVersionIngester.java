@@ -1,6 +1,7 @@
 package org.fcrepo.migration.routes;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.ShutdownRoute;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
 import org.fcrepo.camel.FcrepoHeaders;
@@ -20,7 +21,8 @@ public class DatastreamVersionIngester extends RouteBuilder {
         final Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
-        from("seda:datastreamVersion")
+        from("direct:datastreamVersion")
+            .shutdownRoute(ShutdownRoute.Defer)
             // Get the mimetype
             .setProperty("mimetype").xpath("/foxml:datastreamVersion/@MIMETYPE", ns)
             .log("MIMETYPE ${property.mimetype}")

@@ -1,5 +1,6 @@
 package org.fcrepo.migration.routes;
 
+import org.apache.camel.ShutdownRoute;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
 
@@ -17,8 +18,9 @@ public class DatastreamIngester extends RouteBuilder {
         final Namespaces ns = new Namespaces("foxml", "info:fedora/fedora-system:def/foxml#");
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
-        from("seda:datastream")
+        from("direct:datastream")
+            .shutdownRoute(ShutdownRoute.Defer)
             .split().xpath("/foxml:datastream/foxml:datastreamVersion", ns)
-            .to("seda:datastreamVersion?blockWhenFull=true");
+            .to("direct:datastreamVersion");
     }
 }

@@ -21,7 +21,8 @@
   <bean id="datastreamVersionIngester" class="org.fcrepo.migration.routes.DatastreamVersionIngester" />
 
   <camelContext xmlns="http://camel.apache.org/schema/spring"
-                id="camel">
+                id="camel"
+                shutdownRunningTask="CompleteAllTasks">
     <routeBuilder ref="fileCrawler" />
     <routeBuilder ref="foxmlIngester" />
     <routeBuilder ref="datastreamIngester" />
