@@ -20,6 +20,7 @@ public class ObjectFoxmlIngester extends RouteBuilder {
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("seda:foxml")
+            .id("foxmlIngester")
             // Set foxml as property on exchange so it persists
             .setProperty("foxml").simple("${body}")
 

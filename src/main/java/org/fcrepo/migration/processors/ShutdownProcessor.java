@@ -15,12 +15,23 @@ public class ShutdownProcessor implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
+
+        exchange.getContext().getInflightRepository().remove(exchange);
+
         if (stop == null) {
             stop = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        Main.getInstance().shutdown();
+                        // Shutdown the public route, which also prevents
+                        // this processor from getting executed twice.
+                        exchange.getContext().stopRoute("fileCrawler");
+
+                        // Stop the camel context.
+                        exchange.getContext().stop();
+
+                        // Stop the spring context.
+                        Main.getInstance().stop();
                     } catch (Exception e) {
                         // Ignore
                     }

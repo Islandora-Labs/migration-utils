@@ -22,6 +22,7 @@ public class DatastreamVersionIngester extends RouteBuilder {
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("direct:datastreamVersion")
+            .id("DatastreamVersionIngester")
             .shutdownRoute(ShutdownRoute.Defer)
             // Get the mimetype
             .setProperty("mimetype").xpath("/foxml:datastreamVersion/@MIMETYPE", ns)

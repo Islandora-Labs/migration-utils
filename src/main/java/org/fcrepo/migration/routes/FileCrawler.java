@@ -15,6 +15,7 @@ public class FileCrawler extends RouteBuilder {
     @Override
     public void configure() {
         from("file:{{objectStore.path}}?noop=true&recursive=true&sendEmptyMessageWhenIdle=true")
+            .id("fileCrawler")
             .choice()
                 .when().simple("${body} != null")
                     .to("seda:foxml?blockWhenFull=true")

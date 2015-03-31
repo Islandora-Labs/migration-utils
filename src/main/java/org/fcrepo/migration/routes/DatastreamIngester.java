@@ -19,6 +19,7 @@ public class DatastreamIngester extends RouteBuilder {
         ns.add("audit", "info:fedora/fedora-system:def/audit#");
 
         from("direct:datastream")
+            .id("datastreamIngester")
             .shutdownRoute(ShutdownRoute.Defer)
             .split().xpath("/foxml:datastream/foxml:datastreamVersion", ns)
             .to("direct:datastreamVersion");
